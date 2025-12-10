@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/koneksi.php';
+require_once __DIR__ . '/google_config.php';
 session_start();
 
 $error = '';
@@ -74,7 +75,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <label class="form-label">Password</label>
                             <input type="password" name="password" class="form-control" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Masuk</button>
+                        <button type="submit" class="btn btn-primary w-100 mb-2">Masuk</button>
+                        <a href="<?php echo GOOGLE_AUTH_URL . '?' . http_build_query([
+                            'client_id' => GOOGLE_CLIENT_ID,
+                            'redirect_uri' => GOOGLE_REDIRECT_URI,
+                            'response_type' => 'code',
+                            'scope' => GOOGLE_SCOPES,
+                            'state' => bin2hex(random_bytes(8))
+                        ]); ?>" class="btn btn-outline-secondary w-100 d-flex align-items-center justify-content-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+                                <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.759 7.759 0 0 1 5.902 2.57l-.378.378A6.949 6.949 0 0 0 8 1c-3.86 0-7 3.14-7 7s3.14 7 7 7 7-3.14 7-7c0-.789-.125-1.548-.357-2.26l-.024-.057z"/>
+                                <path d="M8 13.5a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zm0-1.5a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
+                            </svg>
+                            Sign in with Google
+                        </a>
                     </form>
 
                     <p class="mt-3 mb-0 small text-muted">

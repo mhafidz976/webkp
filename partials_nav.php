@@ -7,9 +7,19 @@ $roleKey  = $user['role_key'] ?? '';
 $notifCnt = $user ? unread_notification_count($user['id']) : 0;
 $current  = basename($_SERVER['PHP_SELF'] ?? '');
 ?>
+<style>
+.navbar-brand img {
+  height: 28px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+</style>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="dashboard.php">Lab Kampus</a>
+        <a class="navbar-brand d-flex align-items-center" href="dashboard.php">
+            <img src="logo-kampus.png" alt="Logo Kampus" onerror="this.style.display='none'">
+            <span>Lab Kampus</span>
+        </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>

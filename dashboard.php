@@ -103,7 +103,8 @@ if ($stmt) {
                 <p class="text-muted mb-0">Selamat datang, <strong><?php echo htmlspecialchars($user['nama']); ?></strong>!</p>
             </div>
             <div class="text-end">
-                <small class="text-muted"><?php echo date('d M Y, H:i'); ?></small>
+                <div class="fw-bold text-primary" id="current-date"><?php echo date('l, d F Y'); ?></div>
+                <div class="text-muted" id="current-time"><?php echo date('H:i:s'); ?></div>
             </div>
         </div>
 
@@ -355,5 +356,84 @@ if ($stmt) {
     </div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Update waktu secara real-time
+function updateDateTime() {
+    const now = new Date();
+    
+    // Format hari dan tanggal dalam Bahasa Indonesia
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
+                    'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+    
+    const dayName = days[now.getDay()];
+    const date = now.getDate();
+    const month = months[now.getMonth()];
+    const year = now.getFullYear();
+    
+    // Format waktu
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    
+    // Update DOM
+    const dateElement = document.getElementById('current-date');
+    const timeElement = document.getElementById('current-time');
+    
+    if (dateElement) {
+        dateElement.textContent = `${dayName}, ${date} ${month} ${year}`;
+    }
+    
+    if (timeElement) {
+        timeElement.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+}
+
+// Update setiap detik
+updateDateTime();
+setInterval(updateDateTime, 1000);
+
+// Highlight jadwal yang sedang berlangsung
+function highlightCurrentSchedule() {
+    const now = new Date();
+    const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+    
+    const scheduleRows = document.querySelectorAll('.schedule-row');
+    scheduleRows.forEach(row => {
+        const timeBadge = row.querySelector('.badge');
+        if (timeBadge) {
+            const timeText = timeBadge.textContent.trim();
+            const [startTime, endTime] = timeText.split(' - ').map(t => t.trim());
+            
+            // Remove existing classes
+            row.classList.remove('table-success', 'table-warning', 'table-active');
+            timeBadge.classList.remove('bg-success', 'bg-warning', 'bg-primary');
+            
+            if (currentTime >= startTime && currentTime <= endTime) {
+                // Sedang berlangsung
+                row.classList.add('table-success');
+                timeBadge.classList.remove('bg-success');
+                timeBadge.classList.add('bg-primary');
+            } else if (currentTime < startTime) {
+                // Akan dimulai (dalam 30 menit ke depan)
+                const [startHour, startMin] = startTime.split(':').map(Number);
+                const [currentHour, currentMin] = currentTime.split(':').map(Number);
+                const startMinutes = startHour * 60 + startMin;
+                const currentMinutes = currentHour * 60 + currentMin;
+                
+                if (startMinutes - currentMinutes <= 30 && startMinutes - currentMinutes > 0) {
+                    row.classList.add('table-warning');
+                    timeBadge.classList.remove('bg-success');
+                    timeBadge.classList.add('bg-warning');
+                }
+            }
+        }
+    });
+}
+
+// Update highlight setiap menit
+highlightCurrentSchedule();
+setInterval(highlightCurrentSchedule, 60000);
+</script>
 </body>
 </html>

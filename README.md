@@ -85,6 +85,19 @@ Modul halaman:
 
 5. Tambahkan akun admin pertama ke tabel `users`:
 
+   **Cara 1: Otomatis dengan PHP Script**
+   
+   Jalankan script yang sudah disediakan:
+   ```bash
+   php create_admin.php
+   ```
+   
+   Script ini akan membuat akun admin dengan:
+   - Email: `admin@webkp.local`
+   - Password: `admin123`
+
+   **Cara 2: Manual via phpMyAdmin**
+   
    a. (Opsional) Buat file sementara `hash.php` di folder `webkp`:
 
    ```php
@@ -94,7 +107,7 @@ Modul halaman:
 
    Buka di browser `http://localhost/webkp/hash.php` lalu salin hasil hash.
 
-   b. Di phpMyAdmin > database `db_lab` > tab **SQL**, jalankan (ganti `HASIL_HASH` dengan hash yang kamu salin):
+   b. Di phpMyAdmin > database `db_lab` > tab **SQL**, jalankan (ganti `HASIL_HASH` dengan hash yang kamu salip):
 
    ```sql
    INSERT INTO users (nama, email, password_hash, role_id)
@@ -120,7 +133,7 @@ Modul halaman:
 
 3. Login dengan akun admin yang sudah dibuat, misalnya:
 
-   - Email: `admin@lab.test`
+   - Email: `admin@webkp.local`
    - Password: `admin123`
 
 4. Setelah login akan masuk ke **Dashboard**:
@@ -186,7 +199,7 @@ Setelah tabel `users` terisi, kamu bisa membuat akun-akun berikut (password di-h
 
 | Role          | Username (Email) | Password plain |
 |--------------|------------------|----------------|
-| Admin Lab    | admin@lab.test   | admin123       |
+| Admin Lab    | admin@webkp.local | admin123       |
 | Dosen        | dosen@lab.test   | dosen123       |
 | Teknisi      | teknisi@lab.test | teknisi123     |
 | Mahasiswa    | mhs@lab.test     | mhs123         |
@@ -207,6 +220,11 @@ Untuk setiap akun, buat hash password dengan cara yang sama seperti akun admin, 
 - **app.css** - CSS variables dan custom scrollbar styling
 - **Mobile Support** - Toggle button dan overlay untuk navigasi mobile
 - **Consistent Layout** - `<main class="main-content">` wrapper untuk semua halaman
+
+### Database Setup
+- **create_admin.php** - Script otomatis untuk membuat akun admin pertama
+- **insert_admin.sql** - File SQL untuk insert manual akun admin
+- **Default Admin Account** - Email: admin@webkp.local, Password: admin123
 
 ---
 

@@ -6,7 +6,9 @@ Dibuat dengan:
 - PHP (prosedural, mysqli)
 - MySQL
 - XAMPP (Apache + MySQL)
-- Bootstrap 5 (via CDN) untuk tampilan tabel dan form
+- Bootstrap 5 (via CDN) untuk tampilan responsif
+- Custom CSS dengan sidebar navigation modern
+- JavaScript untuk responsive sidebar toggle
 
 ## Struktur Proyek (Singkat)
 
@@ -20,7 +22,7 @@ File utama (modul besar):
 
 Modul halaman:
 - Autentikasi & dashboard
-  - `login.php`, `logout.php`, `dashboard.php`, `partials_nav.php`.
+  - `login.php`, `logout.php`, `dashboard.php`, `partials_sidebar.php` (sidebar navigation modern).
 - Manajemen pengguna & role
   - `users_index.php`, `users_form.php` (admin saja).
 - Data laboratorium & software
@@ -123,7 +125,8 @@ Modul halaman:
 
 4. Setelah login akan masuk ke **Dashboard**:
    - Lihat ringkasan jumlah lab, jadwal praktikum, peminjaman, tiket.
-   - Gunakan navbar untuk pindah modul:
+   - Gunakan **sidebar navigation** untuk pindah modul:
+     - **Dashboard** → `dashboard.php`
      - **Jadwal Praktikum** → `praktikum_index.php`
      - **Peminjaman Lab** → `bookings_index.php`
      - **Kalender Lab** → `calendar.php`
@@ -134,7 +137,14 @@ Modul halaman:
      - **Laporan** → `reports.php` (Admin saja)
      - **Notifikasi** → `notifications.php`
 
-5. Untuk tampilan jadwal di TV/lobby lab (tanpa login):
+5. **UI Features**:
+   - **Modern Sidebar Navigation** dengan icons dan user info
+   - **Responsive Design** untuk desktop dan mobile
+   - **Custom Scrollbars** untuk sidebar dan main content
+   - **Smooth Animations** dan hover effects
+   - **Mobile Toggle** button untuk sidebar pada layar kecil
+
+6. Untuk tampilan jadwal di TV/lobby lab (tanpa login):
 
    ```text
    http://localhost/webkp/tv_display.php?lab_id=ID_LAB
@@ -182,5 +192,22 @@ Setelah tabel `users` terisi, kamu bisa membuat akun-akun berikut (password di-h
 | Mahasiswa    | mhs@lab.test     | mhs123         |
 
 Untuk setiap akun, buat hash password dengan cara yang sama seperti akun admin, lalu `INSERT` ke tabel `users` dengan `role_id` sesuai role-nya.
+
+## Recent Updates (2025)
+
+### UI/UX Improvements
+- **Complete Sidebar Migration** - Semua halaman sekarang menggunakan sidebar navigation modern
+- **Responsive Design** - Layout yang optimal untuk desktop dan mobile devices
+- **Custom Scrollbars** - Scrollbar yang stylish untuk sidebar dan main content area
+- **Fixed Form Layouts** - Perbaikan struktur HTML pada semua halaman form
+- **Enhanced Navigation** - Icons, user info, dan notifikasi terintegrasi dalam sidebar
+
+### Technical Updates
+- **partials_sidebar.php** - Komponen sidebar reusable dengan JavaScript interaktif
+- **app.css** - CSS variables dan custom scrollbar styling
+- **Mobile Support** - Toggle button dan overlay untuk navigasi mobile
+- **Consistent Layout** - `<main class="main-content">` wrapper untuk semua halaman
+
+---
 
 Proyek ini dapat dijadikan dasar/kerangka untuk dikembangkan lebih lanjut (integrasi SIAKAD, export PDF/Excel, absensi QR, dashboard grafik, dsb.) sesuai kebutuhan masing-masing kampus/lab.

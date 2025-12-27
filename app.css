@@ -221,3 +221,70 @@ h4 {
   padding-right: 0.75rem;
 }
 
+/* Dashboard enhancements */
+.bg-gradient-primary {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%) !important;
+}
+
+.bg-gradient-success {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%) !important;
+}
+
+.bg-gradient-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+}
+
+.bg-gradient-danger {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+}
+
+.dashboard-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.schedule-row:hover {
+    background-color: rgba(37, 99, 235, 0.05);
+}
+
+.card.border-0.shadow-sm {
+    transition: box-shadow 0.2s ease;
+}
+
+.card.border-0.shadow-sm:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1) !important;
+}
+
+.list-group-item:hover {
+    background-color: rgba(249, 250, 251, 0.8);
+}
+
+.badge.rounded-pill {
+    font-weight: 500;
+}
+
+/* Animation for dashboard cards */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dashboard-card {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+.dashboard-card:nth-child(1) { animation-delay: 0.1s; }
+.dashboard-card:nth-child(2) { animation-delay: 0.2s; }
+.dashboard-card:nth-child(3) { animation-delay: 0.3s; }
+.dashboard-card:nth-child(4) { animation-delay: 0.4s; }

@@ -82,16 +82,81 @@ if ($labId > 0) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
     <style>
-        body { background: #000; color: #fff; }
-        .card { background: rgba(0,0,0,0.7); border: none; }
+        body { 
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+            color: #fff; 
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        .card { 
+            background: rgba(255,255,255,0.1); 
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+        }
+        .table {
+            background: rgba(255,255,255,0.05);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .table thead th {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: #fff;
+            font-weight: 600;
+        }
+        .table td {
+            border-color: rgba(255,255,255,0.1);
+            color: #fff;
+        }
+        .badge {
+            font-weight: 500;
+            padding: 0.5em 1em;
+        }
+        .display-header {
+            background: rgba(255,255,255,0.1);
+            border-radius: 1rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        .time-badge {
+            background: rgba(76, 175, 80, 0.8);
+            font-size: 0.9rem;
+        }
+        .event-type-praktikum {
+            background: rgba(33, 150, 243, 0.8);
+        }
+        .event-type-peminjaman {
+            background: rgba(255, 152, 0, 0.8);
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .live-indicator {
+            animation: pulse 2s infinite;
+        }
     </style>
 </head>
 <body>
-<div class="container-fluid py-3">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2 class="mb-0">Jadwal Lab Hari Ini</h2>
-        <form class="d-flex" method="get">
-            <select name="lab_id" class="form-select me-2" onchange="this.form.submit()">
+<div class="container-fluid py-4">
+    <div class="display-header">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="d-flex align-items-center mb-3">
+                    <h1 class="mb-0 me-3">Jadwal Lab Hari Ini</h1>
+                    <span class="badge bg-danger live-indicator">LIVE</span>
+                </div>
+                <p class="mb-0 opacity-75">
+                    <i class="bi bi-calendar3 me-2"></i>
+                    <?php echo date('d F Y'); ?> - 
+                    <i class="bi bi-clock me-2 ms-3"></i>
+                    <span id="current-time"><?php echo date('H:i:s'); ?></span>
+                </p>
+            </div>
+            <div class="col-md-4">
+                <form class="d-flex" method="get">
+                    <select name="lab_id" class="form-select form-select-lg" onchange="this.form.submit()">
                 <option value="">-- Pilih Lab --</option>
                 <?php foreach ($labs as $lab): ?>
                     <option value="<?php echo $lab['id']; ?>" <?php echo (int)$labId === (int)$lab['id'] ? 'selected' : ''; ?>>
@@ -99,58 +164,98 @@ if ($labId > 0) {
                     </option>
                 <?php endforeach; ?>
             </select>
-        </form>
+        </div>
+            </div>
+        </div>
     </div>
 
     <?php if ($labId === 0): ?>
-        <p class="text-muted">Pilih lab untuk menampilkan jadwal.</p>
+        <div class="text-center py-5">
+            <i class="bi bi-building display-1 opacity-50"></i>
+            <h3 class="mt-3">Pilih Lab</h3>
+            <p class="opacity-75">Silakan pilih lab untuk menampilkan jadwal hari ini.</p>
+        </div>
     <?php elseif (empty($events)): ?>
-        <p class="text-muted">Tidak ada jadwal untuk hari ini.</p>
+        <div class="text-center py-5">
+            <i class="bi bi-calendar-x display-1 opacity-50"></i>
+            <h3 class="mt-3">Tidak Ada Jadwal</h3>
+            <p class="opacity-75">Tidak ada jadwal untuk lab ini pada hari ini.</p>
+        </div>
     <?php else: ?>
         <div class="card">
-            <div class="card-body">
-                <table class="table table-dark table-striped align-middle mb-0">
-                    <thead>
-                    <tr>
-                        <th>Waktu</th>
-                        <th>Jenis</th>
-                        <th>Detail</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <?php foreach ($events as $ev): ?>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0">
+                        <thead>
                         <tr>
-                            <td><?php echo htmlspecialchars(substr($ev['jam_mulai'],0,5) . ' - ' . substr($ev['jam_selesai'],0,5)); ?></td>
-                            <td>
-                                <?php if ($ev['event_type'] === 'Praktikum'): ?>
-                                    <span class="badge bg-primary">Praktikum</span>
-                                <?php else: ?>
-                                    <span class="badge bg-warning text-dark">Peminjaman</span>
-                                <?php endif; ?>
-                            </td>
-                            <td>
-                                <?php if ($ev['event_type'] === 'Praktikum'): ?>
-                                    <strong><?php echo htmlspecialchars($ev['mata_kuliah']); ?></strong>
-                                    (<?php echo htmlspecialchars($ev['kelas']); ?>)
-                                    &mdash; Dosen: <?php echo htmlspecialchars($ev['dosen_nama']); ?>
-                                <?php else: ?>
-                                    <strong><?php echo htmlspecialchars($ev['jenis']); ?></strong>
-                                    &mdash; <?php echo htmlspecialchars($ev['keperluan']); ?>
-                                    &mdash; Peminjam: <?php echo htmlspecialchars($ev['peminjam_nama']); ?>
-                                <?php endif; ?>
-                            </td>
+                            <th width="20%">Waktu</th>
+                            <th width="15%">Jenis</th>
+                            <th width="65%">Detail</th>
                         </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($events as $ev): ?>
+                            <tr>
+                                <td>
+                                    <span class="badge time-badge">
+                                        <?php echo htmlspecialchars(substr($ev['jam_mulai'],0,5) . ' - ' . substr($ev['jam_selesai'],0,5)); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <?php if ($ev['event_type'] === 'Praktikum'): ?>
+                                        <span class="badge event-type-praktikum">Praktikum</span>
+                                    <?php else: ?>
+                                        <span class="badge event-type-peminjaman">Peminjaman</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if ($ev['event_type'] === 'Praktikum'): ?>
+                                        <div>
+                                            <strong><?php echo htmlspecialchars($ev['mata_kuliah']); ?></strong>
+                                            <div class="small opacity-75">
+                                                <?php echo htmlspecialchars($ev['dosen_nama']); ?> - 
+                                                Kelas <?php echo htmlspecialchars($ev['kelas']); ?>
+                                            </div>
+                                        </div>
+                                    <?php else: ?>
+                                        <div>
+                                            <strong><?php echo htmlspecialchars($ev['keperluan']); ?></strong>
+                                            <div class="small opacity-75">
+                                                Oleh: <?php echo htmlspecialchars($ev['peminjam_nama']); ?>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     <?php endif; ?>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    // Auto refresh tiap 60 detik untuk mode TV
-    setTimeout(function(){ window.location.reload(); }, 60000);
+    // Update current time every second
+    function updateTime() {
+        const now = new Date();
+        const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+        const timeElement = document.getElementById('current-time');
+        if (timeElement) {
+            timeElement.textContent = timeString;
+        }
+    }
+    
+    // Update immediately and then every second
+    updateTime();
+    setInterval(updateTime, 1000);
+    
+    // Auto-refresh every 5 minutes
+    setTimeout(() => {
+        window.location.reload();
+    }, 300000);
 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

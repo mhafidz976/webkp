@@ -45,8 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-<div class="container py-4">
+<body>
+<?php include __DIR__ . '/partials_sidebar.php'; ?>
+
+<main class="main-content">
+    <div class="container">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h2 class="mb-0">Tambah Jadwal Lab</h2>
         <a href="jadwal_lab_index.php" class="btn btn-secondary btn-sm">&laquo; Kembali ke Jadwal</a>
@@ -114,7 +117,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
-</div>
+    </div>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

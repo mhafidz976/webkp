@@ -90,9 +90,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-<?php include __DIR__ . '/partials_nav.php'; ?>
-<div class="container py-4">
+<body>
+<?php include __DIR__ . '/partials_sidebar.php'; ?>
+
+<main class="main-content">
+    <div class="container">
     <h3 class="mb-3"><?php echo $id > 0 ? 'Edit' : 'Tambah'; ?> User</h3>
 
     <?php if (!empty($errors)): ?>
@@ -102,7 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <li><?php echo htmlspecialchars($e); ?></li>
                 <?php endforeach; ?>
             </ul>
-        </div>
+            </div>
     <?php endif; ?>
 
     <div class="card">
@@ -111,11 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="mb-3">
                     <label class="form-label">Nama</label>
                     <input type="text" name="nama" class="form-control" value="<?php echo htmlspecialchars($nama); ?>" required>
-                </div>
+                    </div>
                 <div class="mb-3">
                     <label class="form-label">Email</label>
                     <input type="email" name="email" class="form-control" value="<?php echo htmlspecialchars($email); ?>" required>
-                </div>
+                    </div>
                 <div class="mb-3">
                     <label class="form-label">Role</label>
                     <select name="role_id" class="form-select" required>
@@ -126,17 +128,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </option>
                         <?php endforeach; ?>
                     </select>
-                </div>
+                    </div>
                 <div class="mb-3">
                     <label class="form-label">Password <?php echo $id > 0 ? '(kosongkan jika tidak diubah)' : ''; ?></label>
                     <input type="password" name="password" class="form-control">
-                </div>
+                    </div>
                 <button type="submit" class="btn btn-primary"><?php echo $id > 0 ? 'Simpan Perubahan' : 'Simpan'; ?></button>
                 <a href="users_index.php" class="btn btn-outline-secondary">Batal</a>
             </form>
-        </div>
+            </div>
     </div>
-</div>
+    </div>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

@@ -72,20 +72,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-<?php include __DIR__ . '/partials_nav.php'; ?>
-<div class="container py-4">
-    <h3 class="mb-3"><?php echo $id > 0 ? 'Edit' : 'Tambah'; ?> Laboratorium</h3>
+<body>
+<?php include __DIR__ . '/partials_sidebar.php'; ?>
 
-    <?php if (!empty($errors)): ?>
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                <?php foreach ($errors as $e): ?>
-                    <li><?php echo htmlspecialchars($e); ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+<main class="main-content">
+    <div class="container">
+        <h3 class="mb-3"><?php echo $id > 0 ? 'Edit' : 'Tambah'; ?> Laboratorium</h3>
+
+        <?php if (!empty($errors)): ?>
+            <div class="alert alert-danger">
+                <ul class="mb-0">
+                    <?php foreach ($errors as $e): ?>
+                        <li><?php echo htmlspecialchars($e); ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
     <div class="card">
         <div class="card-body">
@@ -119,7 +121,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
     </div>
-</div>
+    </div>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

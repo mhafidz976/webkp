@@ -50,9 +50,11 @@ if ($stmt) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-<?php include __DIR__ . '/partials_nav.php'; ?>
-<div class="container py-4">
+<body>
+<?php include __DIR__ . '/partials_sidebar.php'; ?>
+
+<main class="main-content">
+    <div class="container">
     <h3 class="mb-3">Laporan & Rekapitulasi</h3>
 
     <form class="row g-3 mb-3" method="get">
@@ -125,7 +127,8 @@ if ($stmt) {
             </div>
         </div>
     </div>
-</div>
+    </div>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

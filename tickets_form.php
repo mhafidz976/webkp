@@ -87,9 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-<?php include __DIR__ . '/partials_nav.php'; ?>
-<div class="container py-4">
+<body>
+<?php include __DIR__ . '/partials_sidebar.php'; ?>
+
+<main class="main-content">
+    <div class="container">
     <h3 class="mb-3"><?php echo $id > 0 ? 'Edit' : 'Tambah'; ?> Tiket Kerusakan</h3>
 
     <?php if (!empty($errors)): ?>
@@ -115,15 +117,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </option>
                         <?php endforeach; ?>
                     </select>
-                </div>
+                    </div>
                 <div class="mb-3">
                     <label class="form-label">Judul Kerusakan</label>
                     <input type="text" name="judul" class="form-control" value="<?php echo htmlspecialchars($judul); ?>" required>
-                </div>
+                    </div>
                 <div class="mb-3">
                     <label class="form-label">Deskripsi</label>
                     <textarea name="deskripsi" class="form-control" rows="4" required><?php echo htmlspecialchars($deskripsi); ?></textarea>
-                </div>
+                    </div>
                 <div class="mb-3">
                     <label class="form-label">Status</label>
                     <select name="status" class="form-select">
@@ -131,7 +133,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="in_progress" <?php echo $status === 'in_progress' ? 'selected' : ''; ?>>In Progress</option>
                         <option value="closed" <?php echo $status === 'closed' ? 'selected' : ''; ?>>Closed</option>
                     </select>
-                </div>
+                    </div>
                 <?php if (in_array($role, ['admin','teknisi'], true)): ?>
                     <div class="mb-3">
                         <label class="form-label">Teknisi Penanggung Jawab</label>
@@ -143,14 +145,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 </option>
                             <?php endforeach; ?>
                         </select>
-                    </div>
+                        </div>
                 <?php endif; ?>
                 <button type="submit" class="btn btn-primary"><?php echo $id > 0 ? 'Simpan Perubahan' : 'Simpan'; ?></button>
                 <a href="tickets_index.php" class="btn btn-outline-secondary">Batal</a>
             </form>
-        </div>
+            </div>
     </div>
-</div>
+    </div>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

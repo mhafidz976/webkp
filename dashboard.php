@@ -20,50 +20,52 @@ $openTickets     = (int) ($conn->query("SELECT COUNT(*) AS c FROM tickets WHERE 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="app.css" rel="stylesheet">
 </head>
-<body class="bg-light">
-<?php include __DIR__ . '/partials_nav.php'; ?>
+<body>
+<?php include __DIR__ . '/partials_sidebar.php'; ?>
 
-<div class="container py-4">
-    <h3 class="mb-3">Dashboard</h3>
-    <p class="lead">Selamat datang di sistem penjadwalan & manajemen laboratorium kampus.</p>
+<main class="main-content">
+    <div class="container">
+        <h3 class="mb-3">Dashboard</h3>
+        <p class="lead">Selamat datang di sistem penjadwalan & manajemen laboratorium kampus.</p>
 
-    <div class="row g-3 mb-4">
-        <div class="col-md-3">
-            <div class="card text-bg-primary h-100">
-                <div class="card-body">
-                    <div class="fw-bold">Total Lab</div>
-                    <div class="display-6"><?php echo $labsCount; ?></div>
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card text-bg-primary h-100">
+                    <div class="card-body">
+                        <div class="fw-bold">Total Lab</div>
+                        <div class="display-6"><?php echo $labsCount; ?></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-success h-100">
+                    <div class="card-body">
+                        <div class="fw-bold">Jadwal Praktikum</div>
+                        <div class="display-6"><?php echo $praktikumCount; ?></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-warning h-100">
+                    <div class="card-body">
+                        <div class="fw-bold">Peminjaman Lab</div>
+                        <div class="display-6"><?php echo $bookingCount; ?></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-bg-danger h-100">
+                    <div class="card-body">
+                        <div class="fw-bold">Tiket Aktif</div>
+                        <div class="display-6"><?php echo $openTickets; ?></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
-            <div class="card text-bg-success h-100">
-                <div class="card-body">
-                    <div class="fw-bold">Jadwal Praktikum</div>
-                    <div class="display-6"><?php echo $praktikumCount; ?></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-bg-warning h-100">
-                <div class="card-body">
-                    <div class="fw-bold">Peminjaman Lab</div>
-                    <div class="display-6"><?php echo $bookingCount; ?></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="card text-bg-danger h-100">
-                <div class="card-body">
-                    <div class="fw-bold">Tiket Aktif</div>
-                    <div class="display-6"><?php echo $openTickets; ?></div>
-                </div>
-            </div>
-        </div>
+
+        <p class="mb-0">Gunakan menu di samping kiri untuk mengelola jadwal praktikum, peminjaman lab, data laboratorium, software, tiket kerusakan, dan laporan.</p>
     </div>
-
-    <p class="mb-0">Gunakan menu di atas untuk mengelola jadwal praktikum, peminjaman lab, data laboratorium, software, tiket kerusakan, dan laporan.</p>
-</div>
+</main>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
